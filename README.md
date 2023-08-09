@@ -1,3 +1,5 @@
+# Getting Started
+
 In this tutorial we will walk through the basic setup and use of Ionic's Auth Connect in an `@ionic/angular` application.
 
 In this tutorial, you will learn how to:
@@ -653,4 +655,3 @@ At this point, you should have a good idea of how Auth Connect and Identity Vaul
 - <a href="https://ionic.io/docs/auth-connect" target="_blank">Auth Connect</a>
 - <a href="https://ionic.io/docs/identity-vault" target="_blank">Identity Vault</a> - check out its <a href="https://ionic.io/docs/identity-vault/getting-started-angular" target="_blank">Getting Started guide</a> as well.
 - <a href="https://github.com/ionic-enterprise/tea-taster-angular/tree/feature/auth-connect" target="_blank">Tea Taster with Auth Connect and Identity Vault</a>
-

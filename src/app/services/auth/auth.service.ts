@@ -1,15 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 import {
-  Auth0Provider,
   AuthConnect,
   AuthResult,
+  AzureProvider,
   ProviderOptions,
   TokenType,
 } from '@ionic-enterprise/auth';
 import { Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { VaultService } from '../vault/vault.service';
-import { baseConfig, mobileConfig, webConfig } from '../../../config';
+import { baseConfig } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AuthService {
   private isNative;
   private authOptions: ProviderOptions;
   private initializing: Promise<void> | undefined;
-  private provider = new Auth0Provider();
+  private provider = new AzureProvider();
 
   private authenticationChange: BehaviorSubject<boolean> = new BehaviorSubject(
     false
@@ -31,10 +31,8 @@ export class AuthService {
     private vault: VaultService
   ) {
     this.isNative = platform.is('hybrid');
-    this.authOptions = {
-      ...baseConfig,
-      ...(this.isNative ? mobileConfig : webConfig),
-    };
+    this.authOptions = baseConfig;
+
     this.initialize();
     this.authenticationChange$ = this.authenticationChange.asObservable();
     this.isAuthenticated().then((authenticated) =>
@@ -63,6 +61,15 @@ export class AuthService {
       });
     }
     return this.initializing;
+  }
+
+  public async switchApi(opt: ProviderOptions): Promise<AuthResult|undefined> {
+    const baseConfigAuthResult = await this.getAuthResult();
+    if(baseConfigAuthResult)  {
+      const otherApiEmptyAuthResult = await AuthConnect.buildAuthResult(this.provider, opt, { refreshToken: baseConfigAuthResult.refreshToken});
+      return await AuthConnect.refreshSession(this.provider, otherApiEmptyAuthResult);
+    }
+    return undefined;
   }
 
   public async login(): Promise<void> {

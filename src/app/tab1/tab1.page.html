@@ -11,8 +11,16 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="authenticationChange$ | async; else elseBlock">
+  <div class="authed" *ngIf="authenticationChange$ | async; else elseBlock">
     <ion-button (click)="logout()">Logout</ion-button>
+    <ion-button (click)="switchApi(true)">API Uno</ion-button>
+    <ion-button (click)="switchApi()">API Dos</ion-button>
+
+    <section **ngIf="authResult" class="auth-result">
+      <h3>Auth Result</h3>
+      <span class="token">{{authResult?.accessToken}}</span>
+      <a target="_system" href="https://jwt.io/#debugger-io?token={{authResult?.accessToken || ''}}">Launch jwt.io</a>
+    </section>
   </div>
   <ng-template #elseBlock>
     <ion-button (click)="login()">Login</ion-button>
