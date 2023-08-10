@@ -16,10 +16,10 @@
     <ion-button (click)="switchApi(true)">API Uno</ion-button>
     <ion-button (click)="switchApi()">API Dos</ion-button>
 
-    <section **ngIf="authResult" class="auth-result">
+    <section *ngIf="authResult && authResult.accessToken" class="auth-result">
       <h3>Auth Result</h3>
-      <span class="token">{{authResult?.accessToken}}</span>
-      <a target="_system" href="https://jwt.io/#debugger-io?token={{authResult?.accessToken || ''}}">Launch jwt.io</a>
+      <a *ngIf="authResult?.accessToken" target="_system" href="https://jwt.io/#debugger-io?token={{authResult.accessToken}}">Decode token via jwt.io</a>
+      <span class="token ion-padding">{{authResult.accessToken}}</span>
     </section>
   </div>
   <ng-template #elseBlock>

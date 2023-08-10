@@ -32,5 +32,6 @@ export class Tab1Page {
 
   async switchApi(bool = false) {
     this.authResult = await this.auth.switchApi(bool ? otherApiConfig : otherOtherApiConfig);
+    console.log('switchApi', bool, this.authResult);
   }
 }
